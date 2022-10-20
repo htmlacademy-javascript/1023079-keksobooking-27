@@ -23,7 +23,7 @@ const OFFER_TYPE = [
   'hotel'
 ]
 
-const AVATARS_LIST = [
+let avatarsList = [
   'img/avatars/user01.png',
   'img/avatars/user02.png',
   'img/avatars/user03.png',
@@ -85,6 +85,11 @@ const getCoordinats = () =>
 // Функция, которая выбирает случайный элемент массива:
 const getRandomArrayElement = (elements) => elements[getRandomIntModified(0, elements.length - 1)];
 
+//Функция, которая выбирает аватар:
+const getRandomAvatar = (elements) => {
+  const elementIndex = getRandomIntModified(0, elements.length - 1);
+  return elements.splice(elementIndex, 1).join('');
+}
 
 //Функция, которая выбирает массив значений заданной длины (минимум 1) без повторений:
 const getSomeValues = (elements) => {
@@ -110,7 +115,7 @@ const getSomeValues = (elements) => {
 
 // Функция, которая создает значение author:
 const getObjectAuthor = () =>({
-    avatar: getRandomArrayElement(AVATARS_LIST)
+    avatar: getRandomAvatar(avatarsList)
 })
 
 // Функция, которая создает значение offer:
