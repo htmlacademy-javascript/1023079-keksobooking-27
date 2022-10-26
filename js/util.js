@@ -31,7 +31,7 @@ const getNumberWithFloats = (min, max, floatsNumber) => {
 
 // Функция, которая генерирует координаты:
 const getCoordinats = () =>
-  getNumberWithFloats(MIN_LAT, MAX_LAT, 5) + ', ' + getNumberWithFloats(MIN_LNG, MAX_LNG, 5);
+  `${getNumberWithFloats(MIN_LAT, MAX_LAT, 5)}, ${getNumberWithFloats(MIN_LNG, MAX_LNG, 5)}`;
 
 
 // Функция, которая выбирает случайный элемент массива:
