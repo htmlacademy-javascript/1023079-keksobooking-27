@@ -1,2 +1,1 @@
-import {getArrayOfObjects} from './util.js';
-console.log(getArrayOfObjects())
+import './popup.js';
