@@ -90,7 +90,7 @@ const hasValue = (name, property, value) => {
   hasValue('.popup__text--price', offer.price, `${offer.price} ₽/ночь`);
   hasValue('.popup__type', offer.type, offerType);
   hasValue('.popup__text--capacity', offer.guests, `${offer.rooms} комнаты для ${offer.guests} гостей`);
-  hasValue('.popup__text--time', offer.checkin, `Заезд после${offer.checkin}, выезд до ${offer.checkout}`);
+  hasValue('.popup__text--time', offer.checkin, `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`);
   hasValue('.popup__description', offer.description, offer.description);
 
     if(author.avatar) {
@@ -99,17 +99,6 @@ const hasValue = (name, property, value) => {
 
   saveOnlyRealFeature(offer.features, similarOffer);
   loadPhotos(similarOffer, offer.photos);
- /* similarOffer.querySelector('.popup__title').textContent = offer.title;
-  similarOffer.querySelector('.popup__text--address').textContent = offer.address;
-  similarOffer.querySelector('.popup__text--price').textContent = offer.price;
-  similarOffer.querySelector('.popup__type').textContent = offerType;
-  similarOffer.querySelector('.popup__text--capacity').textContent = `${offer.rooms} комнаты для ${offer.guests} гостей`;
-  similarOffer.querySelector('.popup__text--time').textContent =`Заезд после${offer.checkin}, выезд до ${offer.checkout}`;
-  similarOffer.querySelector('.popup__description').textContent = offer.description;
-  similarOffer.querySelector('.popup__avatar').src =author.avatar;*/
-
-
-
 
   resultArr.push(similarOffer);
 });
