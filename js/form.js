@@ -1,24 +1,15 @@
 const newOfferForm = document.querySelector('.ad-form');
+const interactiveFormElements = document.querySelectorAll('.ad-form__element');
+const formHeader = document.querySelector('.ad-form-header');
 
-const makeFormInactive = () => {
-  newOfferForm.classList.add('ad-form--disabled');
-  const interactiveFormElements = document.querySelectorAll('.ad-form__element');
-  const formHeader = document.querySelector('.ad-form-header');
+const toggleForm = () => {
+  newOfferForm.classList.toggle('ad-form--disabled');
+
   interactiveFormElements.forEach((element) => {
-    element.disabled = true;
+    element.disabled = !element.disabled;
   });
-  formHeader.disabled = true;
+  formHeader.disabled = !formHeader.disabled;
 };
 
-
-const makeFormActive = () => {
-  newOfferForm.classList.remove('ad-form--disabled');
-  const interactiveFormElements = document.querySelectorAll('.ad-form__element');
-  const formHeader = document.querySelector('.ad-form-header');
-  interactiveFormElements.forEach((element) => {
-    element.disabled = false;
-  });
-  formHeader.disabled = false;
-};
-
-makeFormInactive();
+toggleForm();
+toggleForm();

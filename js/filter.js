@@ -1,18 +1,12 @@
 const mapFilters = document.querySelector('.map__filters');
 const filterTypes = mapFilters.children;
 
-const makeMapFilterInactive = () => {
+const toggleMapFilter = () => {
   for(let filter of filterTypes) {
-    filter.disabled = true;
+    filter.disabled = !filter.disabled;
   };
-  mapFilters.classList.add('map__filters--disabled');
+  mapFilters.classList.toggle('map__filters--disabled');
 };
 
-const makeMapFilterActive = () => {
-  for(let filter of filterTypes) {
-    filter.disabled = false;
-  };
-  mapFilters.classList.remove('map__filters--disabled');
-};
-
-makeMapFilterInactive();
+toggleMapFilter();
+toggleMapFilter();
