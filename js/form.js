@@ -6,12 +6,12 @@ const pristine = new Pristine(offerForm, {
   errorTextParent: 'ad-form__element',
 }, true);
 
-const ROOMS_FOR_GUESTS = {
-  1: ['1'],
-  2: ['1', '2'],
-  3: ['1', '2', '3'],
-  4: ['0']
-};
+// const ROOMS_FOR_GUESTS = {
+//   1: ['1'],
+//   2: ['1', '2'],
+//   3: ['1', '2', '3'],
+//   4: ['0']
+// };
 
 const GUESTS_FOR_ROOMS = {
   1: ['1', '2', '3'],
@@ -32,12 +32,12 @@ const validateTitle = () => titleField.value.length >= 30 && titleField.value.le
 
 const validatePrice = () => priceField.value <= 100000;
 
-const validatePlaces = () => ROOMS_FOR_GUESTS[(roomsNumber.value)].includes(placesNumber.value);
+//const validatePlaces = () => ROOMS_FOR_GUESTS[(roomsNumber.value)].includes(placesNumber.value);
 
 //Генерируем сообщение об ошибке:
-const roomsErrorTextMessage = () => `Неверное количество комнат. В ${(roomsNumber.value)} комнат поместится ${ROOMS_FOR_GUESTS[roomsNumber.value].join(', ')} гостей`;
+// const roomsErrorTextMessage = () => `Неверное количество комнат. В ${(roomsNumber.value)} комнат поместится ${ROOMS_FOR_GUESTS[roomsNumber.value].join(', ')} гостей`;
 
-const placesErrorMessage = () => `Неверное количество гостей. ${placesNumber.value} гостей поместится в ${GUESTS_FOR_ROOMS[placesNumber.value].join(', ')} комнат`;
+// const placesErrorMessage = () => `Неверное количество гостей. ${placesNumber.value} гостей поместится в ${GUESTS_FOR_ROOMS[placesNumber.value].join(', ')} комнат`;
 
 //Добавляем валидаторы:
 pristine.addValidator(
@@ -52,17 +52,17 @@ pristine.addValidator(
   'Не более 100000'
 );
 
-pristine.addValidator(
-  roomsNumber,
-  validatePlaces,
-  roomsErrorTextMessage
-);
+// pristine.addValidator(
+//   roomsNumber,
+//   validatePlaces,
+//   roomsErrorTextMessage
+// );
 
-pristine.addValidator(
-  placesNumber,
-  validatePlaces,
-  placesErrorMessage
-);
+// pristine.addValidator(
+//   placesNumber,
+//   validatePlaces,
+//   placesErrorMessage
+// );
 
 //Функции, которая запускают валидацию:
 const onTitleChange = () => {
@@ -73,18 +73,31 @@ const onPriceChange = () => {
   pristine.validate(priceField);
 };
 
-const onPlacesChange = () => {
-  pristine.validate(placesNumber);
-  pristine.validate(roomsNumber);
-};
+// const onPlacesChange = () => {
+//   pristine.validate(placesNumber);
+//   pristine.validate(roomsNumber);
+// };
 
 //Вешаем обработчик, который следит за изменениями в форме, и когда они происходят, запускает валидацию:
 titleField.addEventListener('change', onTitleChange);
 priceField.addEventListener('change', onPriceChange);
-roomsNumber.addEventListener('change', onPlacesChange);
-placesNumber.addEventListener('change', onPlacesChange);
+// roomsNumber.addEventListener('change', onPlacesChange);
+// placesNumber.addEventListener('change', onPlacesChange);
+
+const hideInvalidRoomsValues = () => {
+  roomsNumber.value = GUESTS_FOR_ROOMS[placesNumber.value][0];
+  for (const roomNumber of roomsNumber.querySelectorAll('option')) {
+    if(GUESTS_FOR_ROOMS[placesNumber.value].includes(roomNumber.value)) {
+      roomNumber.disabled = false;
+    }
+    else {
+      roomNumber.disabled = true;
+    }
+  }
+};
 
 
+placesNumber.addEventListener('change', hideInvalidRoomsValues);
 offerForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   pristine.validate();
