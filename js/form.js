@@ -6,12 +6,6 @@ const pristine = new Pristine(offerForm, {
   errorTextParent: 'ad-form__element',
 }, true);
 
-// const ROOMS_FOR_GUESTS = {
-//   1: ['1'],
-//   2: ['1', '2'],
-//   3: ['1', '2', '3'],
-//   4: ['0']
-// };
 
 const GUESTS_FOR_ROOMS = {
   1: ['1', '2', '3'],
@@ -42,12 +36,7 @@ const timeOutField = document.querySelector('#timeout');
 const validateTitle = () => titleField.value.length >= 30 && titleField.value.length <= 100;
 const validatePrice = () => priceField.value >= MIN_PRICES_FOR_TYPES[typeField.value] && priceField.value <= 100000;
 
-//const validatePlaces = () => ROOMS_FOR_GUESTS[(roomsNumber.value)].includes(placesNumber.value);
-
 //Генерируем сообщение об ошибке:
-// const roomsErrorTextMessage = () => `Неверное количество комнат. В ${(roomsNumber.value)} комнат поместится ${ROOMS_FOR_GUESTS[roomsNumber.value].join(', ')} гостей`;
-
-// const placesErrorMessage = () => `Неверное количество гостей. ${placesNumber.value} гостей поместится в ${GUESTS_FOR_ROOMS[placesNumber.value].join(', ')} комнат`;
 
 const priceErrorMessage = () => `Не меньше ${MIN_PRICES_FOR_TYPES[typeField.value]} и не больше 100000`;
 
@@ -65,32 +54,13 @@ pristine.addValidator(
 );
 
 
-// pristine.addValidator(
-//   roomsNumber,
-//   validatePlaces,
-//   roomsErrorTextMessage
-// );
-
-// pristine.addValidator(
-//   placesNumber,
-//   validatePlaces,
-//   placesErrorMessage
-// );
-
 //Функции, которая запускают валидацию:
 const onTitleChange = () => {
   pristine.validate(titleField);
 };
 
-const onPriceChange = () => {
-  pristine.validate(priceField);
-};
 
-
-// const onPlacesChange = () => {
-//   pristine.validate(placesNumber);
-//   pristine.validate(roomsNumber);
-// };
+const onPriceChange = () => priceField.value && pristine.validate(priceField);
 
 
 const getPlaceholderValue = () => {
@@ -108,22 +78,16 @@ const makeTimeInToTimeOut = () => {
 //Вешаем обработчик, который следит за изменениями в форме, и когда они происходят, запускает валидацию:
 titleField.addEventListener('change', onTitleChange);
 typeField.addEventListener('change', getPlaceholderValue);
-typeField.addEventListener('change', onPriceChange);
 priceField.addEventListener('change', onPriceChange);
+typeField.addEventListener('change', onPriceChange);
 timeInField.addEventListener('change', makeTimeOutToTimeIn);
 timeOutField.addEventListener('change', makeTimeInToTimeOut);
-// roomsNumber.addEventListener('change', onPlacesChange);
-// placesNumber.addEventListener('change', onPlacesChange);
+
 
 const hideInvalidRoomsValues = () => {
   roomsNumber.value = GUESTS_FOR_ROOMS[placesNumber.value][0];
   for (const roomNumber of roomsNumber.querySelectorAll('option')) {
-    if(GUESTS_FOR_ROOMS[placesNumber.value].includes(roomNumber.value)) {
-      roomNumber.disabled = false;
-    }
-    else {
-      roomNumber.disabled = true;
-    }
+    roomNumber.disabled = !GUESTS_FOR_ROOMS[placesNumber.value].includes(roomNumber.value);
   }
 };
 
