@@ -41,7 +41,7 @@ const getRandomArrayElement = (elements) => elements[getRandomIntModified(0, ele
 const getRandomAvatar = (elements) => {
   const elementIndex = getRandomIntModified(0, elements.length - 1);
   return elements.splice(elementIndex, 1).join('');
-}
+};
 
 //Функция, которая выбирает массив значений заданной длины (минимум 1) без повторений:
 const getSomeValues = (elements) => {
@@ -62,13 +62,13 @@ const getSomeValues = (elements) => {
   }
 
   return valuesArray;
-}
+};
 
 
 // Функция, которая создает значение author:
 const getObjectAuthor = () =>({
-    avatar: getRandomAvatar(avatarsList)
-})
+  avatar: getRandomAvatar(avatarsList)
+});
 
 // Функция, которая создает значение offer:
 const getObjectOffer = () => ({
@@ -83,7 +83,7 @@ const getObjectOffer = () => ({
   features: getSomeValues(FEATURES_LIST),
   description: DESCRIPTION,
   photos: getSomeValues(PHOTOS_LIST)
-})
+});
 
 
 //Функция, которая собирает объект целиком:
@@ -91,7 +91,7 @@ const getWholeObject = () => ({
   author: getObjectAuthor(),
   offer: getObjectOffer(),
   location: getCoordinats()
-})
+});
 
 
 //Функция, которая собирает массив из 10 объектов:
