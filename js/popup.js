@@ -83,6 +83,5 @@ export const makePopupFilled = (object) => {
     balloon.querySelector('.popup__avatar').remove();
   }
 
-
   return balloon;
 };
