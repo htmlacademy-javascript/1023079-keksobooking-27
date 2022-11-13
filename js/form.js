@@ -1,6 +1,6 @@
 const offerForm = document.querySelector('.ad-form');
 
-const pristine = new Pristine(offerForm, {
+export const pristine = new Pristine(offerForm, {
   classTo: 'ad-form__element',
   errorClass: 'ad-form__element--invalid',
   errorTextParent: 'ad-form__element',
@@ -14,7 +14,7 @@ const GUESTS_FOR_ROOMS = {
   0: ['100']
 };
 
-const MIN_PRICES_FOR_TYPES = {
+export const MIN_PRICES_FOR_TYPES = {
   'bungalow': 0,
   'flat': 1000,
   'hotel': 3000,
@@ -24,10 +24,10 @@ const MIN_PRICES_FOR_TYPES = {
 
 //Находим нужные поля:
 const titleField = document.querySelector('#title');
-const priceField = document.querySelector('#price');
+export const priceField = document.querySelector('#price');
 const roomsNumber = document.querySelector('#room_number');
 const placesNumber = document.querySelector('#capacity');
-const typeField = document.querySelector('#type');
+export const typeField = document.querySelector('#type');
 const timeInField = document.querySelector('#timein');
 const timeOutField = document.querySelector('#timeout');
 

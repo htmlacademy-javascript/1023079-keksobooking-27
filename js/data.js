@@ -12,7 +12,7 @@ export const MIN_LAT = 35.65000;
 export const MAX_LAT = 35.70000;
 export const MIN_LNG = 139.70000;
 export const MAX_LNG = 139.80000;
-export const DESCRIPTION = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+export const DESCRIPTION = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
 
 
 export const OFFER_TYPE = [
@@ -21,7 +21,7 @@ export const OFFER_TYPE = [
   'house',
   'bungalow',
   'hotel'
-]
+];
 
 export let avatarsList = [
   'img/avatars/user01.png',
