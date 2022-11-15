@@ -23,5 +23,5 @@ export const toggleMapFilter = () => {
   mapFilters.classList.toggle('map__filters--disabled');
 };
 
-// toggleForm();
-// toggleMapFilter();
+toggleForm();
+toggleMapFilter();

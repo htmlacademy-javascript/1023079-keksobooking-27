@@ -1,12 +1,5 @@
-const mapFilters = document.querySelector('.map__filters');
-const filterTypes = mapFilters.children;
+export const filter = document.querySelector('.map__filters');
 
-const toggleMapFilter = () => {
-  for(let filter of filterTypes) {
-    filter.disabled = !filter.disabled;
-  };
-  mapFilters.classList.toggle('map__filters--disabled');
+export const clearFilter = () => {
+  filter.reset();
 };
-
-toggleMapFilter();
-toggleMapFilter();

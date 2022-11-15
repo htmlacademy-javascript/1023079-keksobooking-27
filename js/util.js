@@ -53,12 +53,12 @@ const getSomeValues = (elements) => {
     return valuesArray;
   }
 
-  let newValuesList = elements.slice();
+  const newValuesList = elements.slice();
 
   for (let i = 0; i < valueAmount; i++) {
-      let itemIndex = getRandomIntModified(0, newValuesList.length - 1);
-      valuesArray.push(newValuesList[itemIndex]);
-      newValuesList.splice(itemIndex, 1);
+    const itemIndex = getRandomIntModified(0, newValuesList.length - 1);
+    valuesArray.push(newValuesList[itemIndex]);
+    newValuesList.splice(itemIndex, 1);
   }
 
   return valuesArray;
@@ -97,3 +97,28 @@ const getWholeObject = () => ({
 //Функция, которая собирает массив из 10 объектов:
 export const getArrayOfObjects = () => Array.from({length: OBJECTS_COUNT}, getWholeObject);
 
+//Функция, которая генерирует блок с ошибкой при загрузке данных:
+export const showAlert = (message) => {
+  const alertContainer = document.createElement('div');
+  alertContainer.style.zIndex = '100';
+  alertContainer.style.position = 'absolute';
+  alertContainer.style.left = '0';
+  alertContainer.style.top = '0';
+  alertContainer.style.right = '0';
+  alertContainer.style.padding = '10px 3px';
+  alertContainer.style.fontSize = '30px';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.backgroundColor = 'red';
+  alertContainer.style.fontSize = '14px';
+
+  alertContainer.textContent = message;
+
+  document.body.append(alertContainer);
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, 5000);
+};
+
+//Функция, которая проверяет, был ли нажат esc:
+export const isEscapeKey = (evt) => evt.key === 'Escape';
