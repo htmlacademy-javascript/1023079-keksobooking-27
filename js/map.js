@@ -1,12 +1,12 @@
-import {offersArr, makePopupFilled} from './popup.js';
-
-// import {toggleForm, toggleMapFilter} from './toggle_status';
-// .on('load', toggleForm())
-//   .on('load', toggleMapFilter())
+import {toggleForm, toggleMapFilter} from './toggle_status.js';
+import {makePopupFilled} from './popup.js';
+import {getData} from './api.js';
 
 const addressField = document.querySelector('#address');
 
-const map = L.map('map-canvas')
+export const map = L.map('map-canvas')
+  .on('load', toggleForm())
+  .on('load', toggleMapFilter())
   .setView({
     lat: 35.66023,
     lng: 139.73007
@@ -26,7 +26,7 @@ const mainIcon = L.icon({
   iconAnchor: [26, 52]
 });
 
-const usualIcon = L.icon({
+export const usualIcon = L.icon({
   iconUrl: './img/pin.svg',
   iconSize: [40, 40],
   iconAnchor: [20, 40]
@@ -47,27 +47,40 @@ const mainMarker = L.marker(
 mainMarker.addTo(map);
 
 
-offersArr.forEach((object) => {
-
-  const addressArr = object.offer.address.split(', ');
-  const usualMarker = L.marker(
-    {
-      lat: addressArr[0],
-      lng: addressArr[1]
-    },
-    {
-      icon: usualIcon
-    }
-  );
-
-  usualMarker
-    .addTo(map)
-    .bindPopup(makePopupFilled(object));
-});
-
-
 mainMarker.on('moveend', (evt) => {
   const coordinates = evt.target.getLatLng();
   addressField.value = `${coordinates.lat.toFixed(5)}, ${coordinates.lng.toFixed(5)}`;
 });
 
+export const renderBalloons = (objects) => {
+  objects.forEach((object) => {
+
+    const usualMarker = L.marker(
+      {
+        lat: object.location.lat,
+        lng: object.location.lng
+      },
+      {
+        icon: usualIcon
+      }
+    );
+
+    usualMarker
+      .addTo(map)
+      .bindPopup(makePopupFilled(object));
+  });
+};
+
+export const resetMap = () => {
+  mainMarker.setLatLng({
+    lat: 35.66023,
+    lng: 139.73007
+  });
+  map.setView({
+    lat: 35.66023,
+    lng: 139.73007
+  }, 10);
+  map.closePopup();
+};
+
+getData(renderBalloons);

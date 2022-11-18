@@ -1,4 +1,15 @@
+import {sendData} from './api.js';
+import {resetMap} from './map.js';
+import {clearFilter} from './filter.js';
+import {isEscapeKey} from './util.js';
+// import {resetSlider} from './slider.js';
+
+const bodyNode = document.body;
 const offerForm = document.querySelector('.ad-form');
+const submitButton = document.querySelector('.ad-form__submit');
+const successMessage = document.querySelector('#success').content.querySelector('.success');
+const errorMessage = document.querySelector('#error').content.querySelector('.error');
+const resetFormButton = document.querySelector('.ad-form__reset');
 
 export const pristine = new Pristine(offerForm, {
   classTo: 'ad-form__element',
@@ -94,8 +105,61 @@ const hideInvalidRoomsValues = () => {
 
 placesNumber.addEventListener('change', hideInvalidRoomsValues);
 
+const makeSubmitButtonDisabled = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = 'Выполняю...';
+};
+
+const makeSubmitButtonEnabled = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = 'Опубликовать';
+};
+
+const clearForm = () => {
+  offerForm.reset();
+};
+
+const onMessageEscKeydown = (evt) => {
+  if(isEscapeKey(evt)) {
+    successMessage.remove();
+    errorMessage.remove();
+    window.removeEventListener('keydown', onMessageEscKeydown);
+  }
+};
+
+const showSubmitFormMessage = (message) => {
+  bodyNode.append(message);
+  window.addEventListener('keydown', onMessageEscKeydown);
+  window.onclick = () => message.remove();
+};
+
+const getSuccessfullSending = () => {
+  clearForm();
+  resetMap();
+  clearFilter();
+  // resetSlider();
+  showSubmitFormMessage(successMessage);
+  makeSubmitButtonEnabled();
+};
+
+const getFailureSending = () => {
+  showSubmitFormMessage(errorMessage);
+  makeSubmitButtonEnabled();
+};
+
 offerForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  pristine.validate();
+
+  const formData = new FormData(evt.target);
+  const isValid = pristine.validate();
+  if(isValid) {
+    makeSubmitButtonDisabled();
+    sendData(getSuccessfullSending, getFailureSending, formData);
+  }
 });
 
+resetFormButton.onclick = () => {
+  clearForm();
+  resetMap();
+  clearFilter();
+};

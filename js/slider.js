@@ -1,4 +1,6 @@
+import './form.js';
 import {MIN_PRICES_FOR_TYPES, typeField, priceField, pristine} from './form.js';
+
 const slider = document.querySelector('.ad-form__slider');
 
 noUiSlider.create(slider, {
@@ -36,3 +38,8 @@ priceField.addEventListener('change', () => {
   );
 });
 
+export const resetSlider = () => {
+  slider.noUiSlider.updateOptions(
+    slider.noUiSlider.set(1000)
+  );
+};
