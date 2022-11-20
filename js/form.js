@@ -2,21 +2,15 @@ import {sendData} from './api.js';
 import {resetMap} from './map.js';
 import {clearFilter} from './filter.js';
 import {isEscapeKey} from './util.js';
-// import {resetSlider} from './slider.js';
+import {resetSlider} from './slider.js';
+import { priceField, typeField, offerForm, pristine, MIN_PRICES_FOR_TYPES} from './data.js';
 
 const bodyNode = document.body;
-const offerForm = document.querySelector('.ad-form');
+
 const submitButton = document.querySelector('.ad-form__submit');
 const successMessage = document.querySelector('#success').content.querySelector('.success');
 const errorMessage = document.querySelector('#error').content.querySelector('.error');
 const resetFormButton = document.querySelector('.ad-form__reset');
-
-export const pristine = new Pristine(offerForm, {
-  classTo: 'ad-form__element',
-  errorClass: 'ad-form__element--invalid',
-  errorTextParent: 'ad-form__element',
-}, true);
-
 
 const GUESTS_FOR_ROOMS = {
   1: ['1', '2', '3'],
@@ -25,20 +19,11 @@ const GUESTS_FOR_ROOMS = {
   0: ['100']
 };
 
-export const MIN_PRICES_FOR_TYPES = {
-  'bungalow': 0,
-  'flat': 1000,
-  'hotel': 3000,
-  'house': 5000,
-  'palace': 10000
-};
 
 //Находим нужные поля:
 const titleField = document.querySelector('#title');
-export const priceField = document.querySelector('#price');
 const roomsNumber = document.querySelector('#room_number');
 const placesNumber = document.querySelector('#capacity');
-export const typeField = document.querySelector('#type');
 const timeInField = document.querySelector('#timein');
 const timeOutField = document.querySelector('#timeout');
 
@@ -119,6 +104,7 @@ const clearForm = () => {
   offerForm.reset();
 };
 
+
 const onMessageEscKeydown = (evt) => {
   if(isEscapeKey(evt)) {
     successMessage.remove();
@@ -133,11 +119,12 @@ const showSubmitFormMessage = (message) => {
   window.onclick = () => message.remove();
 };
 
+
 const getSuccessfullSending = () => {
   clearForm();
   resetMap();
   clearFilter();
-  // resetSlider();
+  resetSlider();
   showSubmitFormMessage(successMessage);
   makeSubmitButtonEnabled();
 };
@@ -162,4 +149,5 @@ resetFormButton.onclick = () => {
   clearForm();
   resetMap();
   clearFilter();
+  resetSlider();
 };

@@ -23,7 +23,7 @@ export const OFFER_TYPE = [
   'hotel'
 ];
 
-export let avatarsList = [
+export const avatarsList = [
   'img/avatars/user01.png',
   'img/avatars/user02.png',
   'img/avatars/user03.png',
@@ -34,16 +34,34 @@ export let avatarsList = [
   'img/avatars/user08.png',
   'img/avatars/user09.png',
   'img/avatars/user10.png',
-]
+];
 
 export const PHOTOS_LIST = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
-]
+];
 
 export const CHECKIN_OPTIONS = ['12:00', '13:00', '14:00'];
 
 export const CHECKOUT_OPTIONS = ['12:00', '13:00', '14:00'];
 
 export const FEATURES_LIST = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+
+export const priceField = document.querySelector('#price');
+export const typeField = document.querySelector('#type');
+export const offerForm = document.querySelector('.ad-form');
+
+export const MIN_PRICES_FOR_TYPES = {
+  'bungalow': 0,
+  'flat': 1000,
+  'hotel': 3000,
+  'house': 5000,
+  'palace': 10000
+};
+
+export const pristine = new Pristine(offerForm, {
+  classTo: 'ad-form__element',
+  errorClass: 'ad-form__element--invalid',
+  errorTextParent: 'ad-form__element',
+}, true);
