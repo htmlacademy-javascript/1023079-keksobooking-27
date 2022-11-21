@@ -1,6 +1,10 @@
 import {toggleForm, toggleMapFilter} from './toggle_status.js';
 import {makePopupFilled} from './popup.js';
 import {getData} from './api.js';
+import {MAX_BALLOONS_IN_MAP} from './data.js';
+import {getFilteredByAll} from './filter.js';
+import {debounce} from './util.js';
+const RERENDER_DELAY = 500;
 
 const addressField = document.querySelector('#address');
 
@@ -46,29 +50,33 @@ const mainMarker = L.marker(
 
 mainMarker.addTo(map);
 
-
 mainMarker.on('moveend', (evt) => {
   const coordinates = evt.target.getLatLng();
   addressField.value = `${coordinates.lat.toFixed(5)}, ${coordinates.lng.toFixed(5)}`;
 });
 
+const markerGroup = L.layerGroup().addTo(map);
+
 export const renderBalloons = (objects) => {
-  objects.forEach((object) => {
+  objects
+    .slice()
+    .filter(getFilteredByAll)
+    .slice(0, MAX_BALLOONS_IN_MAP)
+    .forEach((object) => {
+      const usualMarker = L.marker(
+        {
+          lat: object.location.lat,
+          lng: object.location.lng
+        },
+        {
+          icon: usualIcon
+        }
+      );
 
-    const usualMarker = L.marker(
-      {
-        lat: object.location.lat,
-        lng: object.location.lng
-      },
-      {
-        icon: usualIcon
-      }
-    );
-
-    usualMarker
-      .addTo(map)
-      .bindPopup(makePopupFilled(object));
-  });
+      usualMarker
+        .addTo(markerGroup)
+        .bindPopup(makePopupFilled(object));
+    });
 };
 
 export const resetMap = () => {
@@ -83,4 +91,24 @@ export const resetMap = () => {
   map.closePopup();
 };
 
+
 getData(renderBalloons);
+
+const showFilteredBalloons = () => {
+  markerGroup.clearLayers();
+  getData(renderBalloons);
+};
+
+
+document.querySelectorAll('.map__filter').forEach((filter) => {
+  filter.addEventListener('change', debounce(
+    () => showFilteredBalloons()
+  ), RERENDER_DELAY);
+});
+
+document.querySelectorAll('.map__checkbox').forEach((feature) => {
+  feature.addEventListener('change', debounce(
+    () => showFilteredBalloons()
+  ), RERENDER_DELAY);
+});
+

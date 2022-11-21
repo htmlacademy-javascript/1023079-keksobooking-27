@@ -1,4 +1,3 @@
-import './form.js';
 import {MIN_PRICES_FOR_TYPES, typeField, priceField, pristine} from './form.js';
 
 const slider = document.querySelector('.ad-form__slider');

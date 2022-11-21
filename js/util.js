@@ -122,3 +122,14 @@ export const showAlert = (message) => {
 
 //Функция, которая проверяет, был ли нажат esc:
 export const isEscapeKey = (evt) => evt.key === 'Escape';
+
+//Функция, устраняющая дребезг:
+export const debounce = (callback, timeoutDelay = 500) => {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
