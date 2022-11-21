@@ -2,7 +2,7 @@ import {sendData} from './api.js';
 import {resetMap} from './map.js';
 import {clearFilter} from './filter.js';
 import {isEscapeKey} from './util.js';
-// import {resetSlider} from './slider.js';
+import {resetSlider} from './slider.js';
 
 const bodyNode = document.body;
 const offerForm = document.querySelector('.ad-form');
@@ -10,6 +10,11 @@ const submitButton = document.querySelector('.ad-form__submit');
 const successMessage = document.querySelector('#success').content.querySelector('.success');
 const errorMessage = document.querySelector('#error').content.querySelector('.error');
 const resetFormButton = document.querySelector('.ad-form__reset');
+const avatarInput = document.querySelector('.ad-form-header__input');
+const avatarPlace = document.querySelector('.ad-form-header__preview').querySelector('img');
+const offerFormPhoto = document.querySelector('.ad-form__input');
+const offerPhotoPreview = document.querySelector('.ad-form__photo');
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
 export const pristine = new Pristine(offerForm, {
   classTo: 'ad-form__element',
@@ -137,7 +142,7 @@ const getSuccessfullSending = () => {
   clearForm();
   resetMap();
   clearFilter();
-  // resetSlider();
+  resetSlider();
   showSubmitFormMessage(successMessage);
   makeSubmitButtonEnabled();
 };
@@ -162,4 +167,27 @@ resetFormButton.onclick = () => {
   clearForm();
   resetMap();
   clearFilter();
+  resetSlider();
 };
+
+avatarInput.addEventListener('change', () => {
+  const file = avatarInput.files[0];
+  const fileName = file.name.toLowerCase();
+
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  if (matches) {
+    avatarPlace.src = URL.createObjectURL(file);
+  }
+});
+
+offerFormPhoto.addEventListener('change', () => {
+  const files = offerFormPhoto.files;
+
+  for(const file of files) {
+    const img = document.createElement('img');
+    img.src = URL.createObjectURL(file);
+    img.style.width = '100px';
+    img.style.height = '75px';
+    offerPhotoPreview.append(img);
+  }
+});
