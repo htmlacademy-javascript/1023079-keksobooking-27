@@ -4,7 +4,8 @@ import {getData} from './api.js';
 import {MAX_BALLOONS_IN_MAP} from './data.js';
 import {getFilteredByAll} from './filter.js';
 import {debounce} from './util.js';
-const RERENDER_DELAY = 500;
+
+const RENDERER_DELAY = 500;
 
 const addressField = document.querySelector('#address');
 
@@ -103,12 +104,12 @@ const showFilteredBalloons = () => {
 document.querySelectorAll('.map__filter').forEach((filter) => {
   filter.addEventListener('change', debounce(
     () => showFilteredBalloons()
-  ), RERENDER_DELAY);
+  ), RENDERER_DELAY);
 });
 
 document.querySelectorAll('.map__checkbox').forEach((feature) => {
   feature.addEventListener('change', debounce(
     () => showFilteredBalloons()
-  ), RERENDER_DELAY);
+  ), RENDERER_DELAY);
 });
 

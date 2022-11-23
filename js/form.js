@@ -6,15 +6,11 @@ import {resetSlider} from './slider.js';
 
 const bodyNode = document.body;
 const offerForm = document.querySelector('.ad-form');
-const submitButton = document.querySelector('.ad-form__submit');
-const successMessage = document.querySelector('#success').content.querySelector('.success');
-const errorMessage = document.querySelector('#error').content.querySelector('.error');
-const resetFormButton = document.querySelector('.ad-form__reset');
-const avatarInput = document.querySelector('.ad-form-header__input');
-const avatarPlace = document.querySelector('.ad-form-header__preview').querySelector('img');
-const offerFormPhoto = document.querySelector('.ad-form__input');
-const offerPhotoPreview = document.querySelector('.ad-form__photo');
-const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+const submitButtonForm = document.querySelector('.ad-form__submit');
+const successMessageForm = document.querySelector('#success').content.querySelector('.success');
+const errorMessageForm = document.querySelector('#error').content.querySelector('.error');
+const resetButtonForm = document.querySelector('.ad-form__reset');
+
 
 export const pristine = new Pristine(offerForm, {
   classTo: 'ad-form__element',
@@ -111,13 +107,13 @@ const hideInvalidRoomsValues = () => {
 placesNumber.addEventListener('change', hideInvalidRoomsValues);
 
 const makeSubmitButtonDisabled = () => {
-  submitButton.disabled = true;
-  submitButton.textContent = 'Выполняю...';
+  submitButtonForm.disabled = true;
+  submitButtonForm.textContent = 'Выполняю...';
 };
 
 const makeSubmitButtonEnabled = () => {
-  submitButton.disabled = false;
-  submitButton.textContent = 'Опубликовать';
+  submitButtonForm.disabled = false;
+  submitButtonForm.textContent = 'Опубликовать';
 };
 
 const clearForm = () => {
@@ -126,8 +122,8 @@ const clearForm = () => {
 
 const onMessageEscKeydown = (evt) => {
   if(isEscapeKey(evt)) {
-    successMessage.remove();
-    errorMessage.remove();
+    successMessageForm.remove();
+    errorMessageForm.remove();
     window.removeEventListener('keydown', onMessageEscKeydown);
   }
 };
@@ -143,12 +139,12 @@ const getSuccessfullSending = () => {
   resetMap();
   clearFilter();
   resetSlider();
-  showSubmitFormMessage(successMessage);
+  showSubmitFormMessage(successMessageForm);
   makeSubmitButtonEnabled();
 };
 
 const getFailureSending = () => {
-  showSubmitFormMessage(errorMessage);
+  showSubmitFormMessage(errorMessageForm);
   makeSubmitButtonEnabled();
 };
 
@@ -163,31 +159,11 @@ offerForm.addEventListener('submit', (evt) => {
   }
 });
 
-resetFormButton.onclick = () => {
+resetButtonForm.onclick = () => {
   clearForm();
   resetMap();
   clearFilter();
   resetSlider();
 };
 
-avatarInput.addEventListener('change', () => {
-  const file = avatarInput.files[0];
-  const fileName = file.name.toLowerCase();
 
-  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
-  if (matches) {
-    avatarPlace.src = URL.createObjectURL(file);
-  }
-});
-
-offerFormPhoto.addEventListener('change', () => {
-  const files = offerFormPhoto.files;
-
-  for(const file of files) {
-    const img = document.createElement('img');
-    img.src = URL.createObjectURL(file);
-    img.style.width = '100px';
-    img.style.height = '75px';
-    offerPhotoPreview.append(img);
-  }
-});

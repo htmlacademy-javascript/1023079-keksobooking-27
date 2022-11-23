@@ -4,7 +4,8 @@ export const priceFilter = filter.querySelector('#housing-price');
 export const roomsFilter = filter.querySelector('#housing-rooms');
 export const guestsFilter = filter.querySelector('#housing-guests');
 export const featuresFilter = document.querySelector('#housing-features');
-
+const lowPriceLvl = 10000;
+const higPriceLvl = 50000;
 export const clearFilter = () => {
   filter.reset();
 };
@@ -22,11 +23,11 @@ const getFilteredByPrice = (object) => {
     case 'any':
       return true;
     case 'low':
-      return object.offer.price <= 10000;
+      return object.offer.price <= lowPriceLvl;
     case 'middle':
-      return object.offer.price > 10000 <= object.offer.price <= 50000;
+      return object.offer.price > lowPriceLvl <= object.offer.price <= higPriceLvl;
     case 'high':
-      return object.offer.price > 50000;
+      return object.offer.price > higPriceLvl;
   }
 };
 
